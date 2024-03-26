@@ -1,4 +1,5 @@
- -h  Display this help message
+ 
+  use -h  to display all command
   remove-docker  Remove Docker and its related packages
   install-docker  Install Docker and its related packages
   install-OpenProject  Setup OpenProject
