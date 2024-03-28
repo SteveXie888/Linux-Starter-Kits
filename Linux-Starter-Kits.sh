@@ -13,7 +13,11 @@ usage() {
     echo "  install-ssh-tool  Install tmux"
     echo "  install-aws-CLI  Install AWS CLI"
     echo "  install-git  Install git"
-    echo "  install-nginx  Install Nginx Web Server"  
+    echo "  install-nginx  Install Nginx Web Server"
+    echo "  install-python  Install python"
+    echo "  install-samba  Install samba"
+    echo "  install-redmine Install redmine"  
+    
 }
 
 # Check if the script is run with a parameter
@@ -59,6 +63,7 @@ elif [ "$1" = "install-Ollama" ]; then
 elif [ "$1" = "install-network-tool" ]; then
     # Execute the command to install network tools
     sudo yum install -y net-tools bind-utils
+    sudo yum install tcpdump -y
 elif [ "$1" = "install-ssh-tool" ]; then
     # Execute the command to install tmux
     sudo yum install -y tmux
@@ -70,7 +75,40 @@ elif [ "$1" = "install-git" ]; then
     sudo yum update
     sudo yum install git -y
 elif [ "$1" = "install-nginx" ]; then
-    sudo docker pull nginx    
+    sudo docker pull nginx
+elif [ "$1" = "install-python" ]; then
+    sudo yum install wget
+    yum install gcc yum-utils zlib-devel python-tools cmake git pkgconfig -y --skip-broken
+    yum groupinstall -y "Development Tools" --skip-broken
+    wget https://www.python.org/ftp/python/3.12.2/Python-3.12.2.tgz
+    tar xzf Python-3.12.2.tgz
+    cd Python-3.12.2
+    ./configure
+    make
+    make install
+    python3 --version
+    cd ..
+    rm -rf Python-3.12.2
+    rm -rf Python-3.12.2.tgz
+
+elif [ "$1" = "install-samba" ]; then
+    sudo yum update -y
+    sudo yum install samba samba-client samba-common -y
+    echo -e "1111\n1111"|sudo pdbedit -a root
+    sudo -u ec2-user mkdir /home/ec2-user/samba
+    sudo bash -c 'cat >> /etc/samba/smb.conf' << EOF
+    [ROOTGROUP]
+            path = /
+            browseable = yes
+            writable = yes
+            create mode = 0777
+            directory mode = 2777
+            write list = ec2-user, @ec2-user,root, @root
+EOF
+    sudo service smb start
+    sudo service nmb start
+elif [ "$1" = "install-redmine" ]; then
+    docker pull redmine
 else
     echo "Unknown parameter: $1"
     usage
