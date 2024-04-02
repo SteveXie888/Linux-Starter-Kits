@@ -95,30 +95,44 @@ elif [ "$1" = "install-samba" ]; then
     sudo yum update -y
     sudo yum install samba samba-client samba-common -y
     echo -e "1111\n1111"|sudo pdbedit -a root
-    sudo -u ec2-user mkdir /home/ec2-user/samba
-    sudo bash -c 'cat >> /etc/samba/smb.conf' << EOF
-    [ROOTGROUP]
-            path = /
-            browseable = yes
-            writable = yes
-            create mode = 0777
-            directory mode = 2777
-            write list = ec2-user, @ec2-user,root, @root
+    sudo bash -c 'cat > /etc/samba/smb.conf' << EOF
+[global]
+    workgroup = WORKGROUP
+    netbios name = centos
+    server string = centos
+    log file = /var/log/samba/log.%m
+    security = user
+	log level=3
+	max log size=0
+    passdb backend = tdbsam
+	follow symlinks = yes
+	wide links = yes
+	strict locking = no
+	unix extensions = no
+[homes]
+    comment = Home Directories
+    browseable = No
+    path = %H
+    writable = yes
+    create mode = 0664
+    directory mode = 0775
+[ROOTGROUP]
+    path = /
+    browseable = yes
+    writable = yes
+    create mode = 0777
+    directory mode = 2777
+    write list = root, @root
 EOF
     sudo service smb start
     sudo service nmb start
-    # Check if running as root
-    if [ "$(id -u)" != "0" ]; then
-        echo "This script must be run as root" 1>&2
-        exit 1
-    fi
     # Check if SELinux is enabled
     if [ -f /etc/selinux/config ]; then
         # Temporarily set SELinux to permissive mode
         setenforce 0
         
         # Modify the SELINUX directive in the configuration file to disabled
-        sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+        sudo sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
         
         echo "SELinux disabled. Reboot your system for changes to take effect."
     else
