@@ -15,9 +15,9 @@ usage() {
     echo "  install-git  Install git"
     echo "  install-nginx  Install Nginx Web Server"
     echo "  install-python  Install python"
-    echo "  install-samba  Install samba"
+    echo "  install-samba Install samba default user:root password:1111"
     echo "  install-redmine Install redmine"  
-    
+    echo "  install-iptables Install iptables" 
 }
 
 # Check if the script is run with a parameter
@@ -126,20 +126,23 @@ elif [ "$1" = "install-samba" ]; then
 EOF
     sudo service smb start
     sudo service nmb start
+    sudo systemctl enable nmb
+    sudo systemctl enable smb
     # Check if SELinux is enabled
     if [ -f /etc/selinux/config ]; then
         # Temporarily set SELinux to permissive mode
-        setenforce 0
-        
+        setenforce 0   
         # Modify the SELINUX directive in the configuration file to disabled
-        sudo sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
-        
+        sudo sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config    
         echo "SELinux disabled. Reboot your system for changes to take effect."
     else
         echo "SELinux is not enabled on this system."
     fi
 elif [ "$1" = "install-redmine" ]; then
     docker pull redmine
+elif [ "$1" = "install-iptables" ]; then
+    sudo iptables-save > /path/to/backup-file
+    sudo iptables-restore < /etc/iptables/rules.v4
 else
     echo "Unknown parameter: $1"
     usage
