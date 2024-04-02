@@ -107,6 +107,23 @@ elif [ "$1" = "install-samba" ]; then
 EOF
     sudo service smb start
     sudo service nmb start
+    # Check if running as root
+    if [ "$(id -u)" != "0" ]; then
+        echo "This script must be run as root" 1>&2
+        exit 1
+    fi
+    # Check if SELinux is enabled
+    if [ -f /etc/selinux/config ]; then
+        # Temporarily set SELinux to permissive mode
+        setenforce 0
+        
+        # Modify the SELINUX directive in the configuration file to disabled
+        sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+        
+        echo "SELinux disabled. Reboot your system for changes to take effect."
+    else
+        echo "SELinux is not enabled on this system."
+    fi
 elif [ "$1" = "install-redmine" ]; then
     docker pull redmine
 else
