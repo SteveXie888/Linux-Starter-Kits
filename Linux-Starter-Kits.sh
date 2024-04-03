@@ -17,7 +17,7 @@ usage() {
     echo "  install-python  Install python"
     echo "  install-samba Install samba default user:root password:1111"
     echo "  install-redmine Install redmine"  
-    echo "  install-iptables Install iptables" 
+    echo "  save-iptables Save current iptables" 
 }
 
 # Check if the script is run with a parameter
@@ -140,9 +140,10 @@ EOF
     fi
 elif [ "$1" = "install-redmine" ]; then
     docker pull redmine
-elif [ "$1" = "install-iptables" ]; then
-    sudo iptables-save > /path/to/backup-file
-    sudo iptables-restore < /etc/iptables/rules.v4
+elif [ "$1" = "save-iptables" ]; then
+    sudo iptables-save > /etc/rules.v4
+    sudo chmod 755 /etc/rc.d/rc.local
+    echo "sudo iptables-restore < /etc/rules.v4" | sudo tee -a /etc/rc.d/rc.local
 else
     echo "Unknown parameter: $1"
     usage
