@@ -7,8 +7,7 @@ usage() {
     echo "  -h  Display this help message"
     echo "  remove-docker  Remove Docker and its related packages"
     echo "  install-docker  Install Docker and its related packages"
-    echo "  install-OpenProject  Setup OpenProject"
-    echo "  install-Ollama  Run Ollama installation script"
+    echo "  install-OpenProject  Setup OpenProject" 
     echo "  install-network-tool  Install network tools"
     echo "  install-ssh-tool  Install tmux"
     echo "  install-aws-CLI  Install AWS CLI"
@@ -18,7 +17,8 @@ usage() {
     echo "  install-samba Install samba default user:root password:1111"
     echo "  install-redmine Install redmine"  
     echo "  save-iptables Save current iptables" 
-    echo "  install-Ollama-OpenWebUI-AUTOMATIC1111 Install Ollama and OpenWebUI and AUTOMATIC1111" 
+    echo "  install-Ollama-OpenWebUI-AUTOMATIC1111 Install Ollama and OpenWebUI and AUTOMATIC1111"
+    echo "  install-Ollama-OpenWebUI Install Ollama and OpenWebUI"
 }
 
 # Check if the script is run with a parameter
