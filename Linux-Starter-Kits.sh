@@ -159,7 +159,7 @@ elif [ "$1" = "install-Ollama-OpenWebUI-AUTOMATIC1111" ]; then
     eval "$(pyenv init -)"
     fi
 EOF
-    # exec "$SHELL"
+    source ~/.bashrc
     pyenv install 3.10
     pyenv global 3.10
     git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui && cd stable-diffusion-webui
