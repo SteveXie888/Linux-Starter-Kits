@@ -61,6 +61,12 @@ elif [ "$1" = "install-Ollama" ]; then
     curl -fsSL https://ollama.com/install.sh | sh
     # Execute the command to run Ollama web UI container
     docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+    sudo curl http://localhost:11434/api/pull -d '{
+        "name": "llama3"
+    }'
+    sudo curl http://localhost:11434/api/pull -d '{
+        "name": "gemma2"
+    }'
 elif [ "$1" = "install-network-tool" ]; then
     # Execute the command to install network tools
     sudo yum install -y net-tools bind-utils
@@ -148,6 +154,12 @@ elif [ "$1" = "save-iptables" ]; then
 elif [ "$1" = "install-Ollama-OpenWebUI-AUTOMATIC1111" ]; then
     sudo curl -fsSL https://ollama.com/install.sh | sh
     sudo docker run -d --network=host --gpus=all -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama
+    sudo curl http://localhost:11434/api/pull -d '{
+        "name": "llama3"
+    }'
+    sudo curl http://localhost:11434/api/pull -d '{
+        "name": "gemma2"
+    }'
     sudo amazon-linux-extras install epel -y
     sudo yum -y install git gcc zlib-devel bzip2-devel readline-devel sqlite-devel
     git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
