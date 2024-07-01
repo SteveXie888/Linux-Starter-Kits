@@ -158,7 +158,7 @@ elif [ "$1" = "install-Ollama-OpenWebUI-AUTOMATIC1111" ]; then
     if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
     fi
-    EOF
+EOF
     exec "$SHELL"
     pyenv install 3.10
     pyenv global 3.10
