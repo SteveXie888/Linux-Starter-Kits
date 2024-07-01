@@ -18,6 +18,7 @@ usage() {
     echo "  install-samba Install samba default user:root password:1111"
     echo "  install-redmine Install redmine"  
     echo "  save-iptables Save current iptables" 
+    echo "  install-Ollama-OpenWebUI-AUTOMATIC1111 Install Ollama and OpenWebUI and AUTOMATIC1111" 
 }
 
 # Check if the script is run with a parameter
@@ -144,6 +145,25 @@ elif [ "$1" = "save-iptables" ]; then
     sudo iptables-save > /etc/rules.v4
     sudo chmod 755 /etc/rc.d/rc.local
     echo "sudo iptables-restore < /etc/rules.v4" | sudo tee -a /etc/rc.d/rc.local
+elif [ "$1" = "install-Ollama-OpenWebUI-AUTOMATIC1111" ]; then
+    sudo curl -fsSL https://ollama.com/install.sh | sh
+    sudo docker run -d --network=host --gpus=all -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama
+    sudo amazon-linux-extras install epel -y
+    sudo yum -y install git gcc zlib-devel bzip2-devel readline-devel sqlite-devel
+    git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+    sudo bash -c "cat >> $HOME/.bashrc" << 'EOF'
+    export PYENV_ROOT=${HOME}/.pyenv
+    export PATH=${PYENV_ROOT}/bin:${PATH}
+
+    if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+    fi
+    EOF
+    exec "$SHELL"
+    pyenv install 3.10
+    pyenv global 3.10
+    git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui && cd stable-diffusion-webui
+    ./webui.sh --api --api-auth test:test --listen
 else
     echo "Unknown parameter: $1"
     usage
