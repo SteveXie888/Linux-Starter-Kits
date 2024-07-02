@@ -21,6 +21,7 @@ usage() {
     echo "  save-iptables Save current iptables" 
     echo "  install-Ollama-OpenWebUI Install Ollama and OpenWebUI"
     echo "  install-Ollama-OpenWebUI-AUTOMATIC1111 Install Ollama and OpenWebUI and AUTOMATIC1111"
+    echo "  install-jupyterlab Install jupyterlab"
 }
 
 # Check if the script is run with a parameter
@@ -153,6 +154,12 @@ elif [ "$1" = "save-iptables" ]; then
     sudo iptables-save > /etc/rules.v4
     sudo chmod 755 /etc/rc.d/rc.local
     echo "sudo iptables-restore < /etc/rules.v4" | sudo tee -a /etc/rc.d/rc.local
+elif [ "$1" = "install-jupyterlab" ]; then
+    pip install jupyterlab
+    pip install  jupyterlab-lsp
+    pip install 'python-lsp-server[all]'
+    ln -s / .lsp_symlink
+    # jupyter lab --allow-root --ip <your_LAN_ip> --port 8888
 elif [ "$1" = "install-Ollama-OpenWebUI-AUTOMATIC1111" ]; then
     sudo curl -fsSL https://ollama.com/install.sh | sh
     sudo docker run -d --network=host --gpus=all -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama

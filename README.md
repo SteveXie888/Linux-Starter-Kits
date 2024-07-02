@@ -13,3 +13,4 @@
 "  save-iptables Save current iptables" <br />
 "  install-Ollama-OpenWebUI Install Ollama and OpenWebUI" <br />
 "  install-Ollama-OpenWebUI-AUTOMATIC1111 Install Ollama and OpenWebUI and AUTOMATIC1111" <br />
+"  install-jupyterlab Install jupyterlab" <br />
