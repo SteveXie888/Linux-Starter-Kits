@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#push to https://github.com/SteveXie888/Linux-Starter-Kits
+
 # Function to display usage information
 usage() {
     echo "Usage: $0 <parameter>"
