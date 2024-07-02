@@ -56,7 +56,7 @@ elif [ "$1" = "install-OpenProject" ]; then
     cd openproject/compose
     docker-compose pull
     OPENPROJECT_HTTPS=false docker-compose up -d
-elif [ "$1" = "install-Ollama" ]; then
+elif [ "$1" = "install-Ollama-OpenWebUI" ]; then
     # Execute the command to run Ollama installation script
     curl -fsSL https://ollama.com/install.sh | sh
     # Execute the command to run Ollama web UI container
