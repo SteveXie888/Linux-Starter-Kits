@@ -158,7 +158,7 @@ elif [ "$1" = "install-jupyterlab" ]; then
     pip install jupyterlab
     pip install  jupyterlab-lsp
     pip install 'python-lsp-server[all]'
-    ln -s / .lsp_symlink
+    sudo ln -s / .lsp_symlink
     # jupyter lab --allow-root --ip <your_LAN_ip> --port 8888
 elif [ "$1" = "install-Ollama-OpenWebUI-AUTOMATIC1111" ]; then
     sudo curl -fsSL https://ollama.com/install.sh | sh
