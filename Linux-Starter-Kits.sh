@@ -17,8 +17,8 @@ usage() {
     echo "  install-samba Install samba default user:root password:1111"
     echo "  install-redmine Install redmine"  
     echo "  save-iptables Save current iptables" 
-    echo "  install-Ollama-OpenWebUI-AUTOMATIC1111 Install Ollama and OpenWebUI and AUTOMATIC1111"
     echo "  install-Ollama-OpenWebUI Install Ollama and OpenWebUI"
+    echo "  install-Ollama-OpenWebUI-AUTOMATIC1111 Install Ollama and OpenWebUI and AUTOMATIC1111"
 }
 
 # Check if the script is run with a parameter
