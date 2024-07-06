@@ -61,9 +61,9 @@ elif [ "$1" = "install-OpenProject" ]; then
     OPENPROJECT_HTTPS=false docker-compose up -d
 elif [ "$1" = "install-Ollama-OpenWebUI" ]; then
     # Execute the command to run Ollama installation script
-    curl -fsSL https://ollama.com/install.sh | sh
+    sudo curl -fsSL https://ollama.com/install.sh | sh
     # Execute the command to run Ollama web UI container
-    docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+    sudo docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
     sudo curl http://localhost:11434/api/pull -d '{
         "name": "llama3"
     }'
