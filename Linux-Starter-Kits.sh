@@ -153,6 +153,40 @@ http {
             location = /50x.html {
         }
     }
+    server {
+        listen       11435 ssl http2;
+        listen       [::]:11435 ssl http2;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        ssl_certificate "/etc/pki/nginx/server.crt";
+        ssl_certificate_key "/etc/pki/nginx/server.key";
+        ssl_session_cache shared:SSL:1m;
+        ssl_session_timeout  10m;
+        ssl_ciphers HIGH:!aNULL:!MD5;
+        ssl_prefer_server_ciphers on;
+	location / {
+		proxy_pass http://localhost:11434;  # Forward to localhost:11434
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        # Timeout settings
+        proxy_connect_timeout 1200s;   # Time to wait for a connection to the upstream server
+        proxy_send_timeout 1200s;      # Time to wait for sending a request to the upstream server
+        proxy_read_timeout 1200s;      # Time to wait for receiving a response from the upstream server
+	}
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
 
 }
 EOF
@@ -340,6 +374,40 @@ http {
 		proxy_set_header Host $host;
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	}
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+    server {
+        listen       11435 ssl http2;
+        listen       [::]:11435 ssl http2;
+        server_name  _;
+        root         /usr/share/nginx/html;
+
+        ssl_certificate "/etc/pki/nginx/server.crt";
+        ssl_certificate_key "/etc/pki/nginx/server.key";
+        ssl_session_cache shared:SSL:1m;
+        ssl_session_timeout  10m;
+        ssl_ciphers HIGH:!aNULL:!MD5;
+        ssl_prefer_server_ciphers on;
+	location / {
+		proxy_pass http://localhost:11434;  # Forward to localhost:11434
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        # Timeout settings
+        proxy_connect_timeout 1200s;   # Time to wait for a connection to the upstream server
+        proxy_send_timeout 1200s;      # Time to wait for sending a request to the upstream server
+        proxy_read_timeout 1200s;      # Time to wait for receiving a response from the upstream server
 	}
 
         # Load configuration files for the default server block.
