@@ -136,6 +136,7 @@ http {
         ssl_ciphers HIGH:!aNULL:!MD5;
         ssl_prefer_server_ciphers on;
 	location / {
+        client_max_body_size 300M;
 		proxy_pass http://localhost:8080;  # Forward to localhost:8080
 		proxy_set_header Host $host;
 		proxy_set_header X-Real-IP $remote_addr;
@@ -166,6 +167,7 @@ http {
         ssl_ciphers HIGH:!aNULL:!MD5;
         ssl_prefer_server_ciphers on;
 	location / {
+        client_max_body_size 300M;
 		proxy_pass http://localhost:11434;  # Forward to localhost:11434
 		proxy_set_header Host $host;
 		proxy_set_header X-Real-IP $remote_addr;
@@ -370,6 +372,7 @@ http {
         ssl_ciphers HIGH:!aNULL:!MD5;
         ssl_prefer_server_ciphers on;
 	location / {
+        client_max_body_size 300M;
 		proxy_pass http://localhost:8080;  # Forward to localhost:8080
 		proxy_set_header Host $host;
 		proxy_set_header X-Real-IP $remote_addr;
@@ -400,6 +403,7 @@ http {
         ssl_ciphers HIGH:!aNULL:!MD5;
         ssl_prefer_server_ciphers on;
 	location / {
+        client_max_body_size 300M;
 		proxy_pass http://localhost:11434;  # Forward to localhost:11434
 		proxy_set_header Host $host;
 		proxy_set_header X-Real-IP $remote_addr;
