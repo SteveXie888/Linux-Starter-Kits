@@ -202,9 +202,6 @@ EOF
     sudo curl http://localhost:11434/api/pull -d '{
         "name": "llama3"
     }'
-    sudo curl http://localhost:11434/api/pull -d '{
-        "name": "gemma2"
-    }'
 elif [ "$1" = "install-network-tool" ]; then
     # Execute the command to install network tools
     sudo yum install -y net-tools bind-utils
@@ -435,9 +432,6 @@ EOF
     sudo docker run -d --network=host --gpus=all -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama
     sudo curl http://localhost:11434/api/pull -d '{
         "name": "llama3"
-    }'
-    sudo curl http://localhost:11434/api/pull -d '{
-        "name": "gemma2"
     }'
     sudo amazon-linux-extras install epel -y
     sudo yum -y install git gcc zlib-devel bzip2-devel readline-devel sqlite-devel
