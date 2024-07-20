@@ -199,6 +199,7 @@ EOF
     sudo ollama serve &
     sudo sed -i '/\[Service\]/a\Environment="OLLAMA_HOST=0.0.0.0:11434"' /etc/systemd/system/ollama.service
     sudo systemctl stop ollama.service
+    sudo systemctl reload ollama.service
     sudo systemctl enable ollama.service
     sudo systemctl start ollama.service
     # Execute the command to run Ollama web UI container
@@ -435,6 +436,7 @@ EOF
     sudo ollama serve &
     sudo sed -i '/\[Service\]/a\Environment="OLLAMA_HOST=0.0.0.0:11434"' /etc/systemd/system/ollama.service
     sudo systemctl stop ollama.service
+    sudo systemctl reload ollama.service
     sudo systemctl enable ollama.service
     sudo systemctl start ollama.service
     sudo docker run -d --network=host --gpus=all -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama
