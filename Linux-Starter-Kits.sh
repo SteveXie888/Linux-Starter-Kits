@@ -196,12 +196,11 @@ EOF
     sudo systemctl restart nginx
     # Execute the command to run Ollama installation script
     sudo curl -fsSL https://ollama.com/install.sh | sh
-    sudo ollama serve &
     sudo sed -i '/\[Service\]/a\Environment="OLLAMA_HOST=0.0.0.0:11434"' /etc/systemd/system/ollama.service
     sudo systemctl stop ollama.service
-    sudo systemctl reload ollama.service
     sudo systemctl enable ollama.service
     sudo systemctl start ollama.service
+    sudo ollama serve &
     # Execute the command to run Ollama web UI container
     sudo docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
     sudo curl http://localhost:11434/api/pull -d '{
@@ -433,12 +432,11 @@ EOF
     sudo systemctl enable nginx
     sudo systemctl restart nginx
     sudo curl -fsSL https://ollama.com/install.sh | sh
-    sudo ollama serve &
     sudo sed -i '/\[Service\]/a\Environment="OLLAMA_HOST=0.0.0.0:11434"' /etc/systemd/system/ollama.service
     sudo systemctl stop ollama.service
-    sudo systemctl reload ollama.service
     sudo systemctl enable ollama.service
     sudo systemctl start ollama.service
+    sudo ollama serve &
     sudo docker run -d --network=host --gpus=all -v ollama:/root/.ollama -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama
     sudo curl http://localhost:11434/api/pull -d '{
         "name": "llama3"
